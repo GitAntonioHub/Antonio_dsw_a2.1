@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Duda;
 
-class DudaController extends Controller
-{
-    public function create()
-    {
-        $modulos = [
-            'Desarrollo Web en Entorno Servidor',
-            'Desarrollo Web en Entorno Cliente',
-            'Despliegue de Aplicaciones Web',
-            'Empresa e Iniciativa Emprendedora',
-            'Diseño de Interfaces Web',
-        ];
+class DudaController extends Controller{
+    
+    public function create(){
 
-        return view('dudas.create', compact('modulos'));
-    }
+    $modulos = [
+        'Desarrollo Web en Entorno Servidor',
+        'Desarrollo Web en Entorno Cliente',
+        'Despliegue de Aplicaciones Web',
+        'Empresa e Iniciativa Emprendedora',
+        'Diseño de Interfaces Web',
+    ];
+
+    return view('welcome', compact('modulos'));
+}
+
 
     public function store(Request $request)
     {
