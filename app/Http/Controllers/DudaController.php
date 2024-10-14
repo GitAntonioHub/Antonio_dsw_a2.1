@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Duda;
+use Illuminate\Support\Facades\Storage;
 
 class DudaController extends Controller{
     
@@ -22,15 +23,39 @@ class DudaController extends Controller{
 
     public function store(Request $request)
     {
+        // Validación
         $request->validate([
             'correo' => 'required|email',
-            'modulo' => 'required',
-            'asunto' => 'required|max:255',
-            'descripcion' => 'required',
+            'modulo' => 'required|string',
+            'asunto' => 'required|string',
+            'descripcion' => 'required|string',
         ]);
 
-        Duda::create($request->all());
+        // Crear la instancia de Duda
+        $duda = Duda::create($request->all());
 
-        return redirect()->back()->with('success', 'Tu duda ha sido enviada correctamente.');
+        // Datos a escribir en el CSV
+        $csvData = [
+            '"' . $duda->correo . '"',
+            '"' . $duda->modulo . '"',
+            '"' . $duda->asunto . '"',
+            '"' . $duda->descripcion . '"'
+        ];
+
+        // Ruta del archivo CSV
+        $csvFile = storage_path('app/dudas.csv');
+
+        // Verificar si el archivo existe
+        if (!file_exists($csvFile)) {
+            // Si no existe, crea el archivo y agrega los encabezados
+            file_put_contents($csvFile, "correo;modulo;asunto;descripcion\n");
+        }
+
+        // Escribir los datos en el archivo CSV
+        file_put_contents($csvFile, implode(';', $csvData) . "\n", FILE_APPEND);
+
+        // Redirigir a una página de éxito
+        return redirect()->route('duda.create')->with('success', 'Los datos se han registrado correctamente.');
     }
+
 }
