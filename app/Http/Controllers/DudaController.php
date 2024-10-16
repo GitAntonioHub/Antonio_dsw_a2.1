@@ -41,7 +41,7 @@ class DudaController extends Controller{
             '"' . $duda->asunto . '"',
             '"' . $duda->descripcion . '"'
         ];
-
+        
         // Ruta del archivo CSV
         $csvFile = storage_path('app/dudas.csv');
 
@@ -56,6 +56,19 @@ class DudaController extends Controller{
 
         // Redirigir a una página de éxito
         return redirect()->route('duda.create')->with('success', 'Los datos se han registrado correctamente.');
+    
+        DB::table('dudas')->insert([
+            'email' => $validatedData['email'],
+            'modulo' => $validatedData['modulo'],
+            'asunto' => $validatedData['asunto'],
+            'descripcion' => $validatedData['descripcion'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    
+        return redirect()->back()->with('success', 'Duda enviada correctamente.');
+    
+
     }
 
 }
