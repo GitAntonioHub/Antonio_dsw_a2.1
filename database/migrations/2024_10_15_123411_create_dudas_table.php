@@ -14,13 +14,14 @@ return new class extends Migration
     if (!Schema::hasTable('dudas')) {
         Schema::create('dudas', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
+            $table->string('correo');
             $table->string('modulo');
             $table->string('asunto');
             $table->text('descripcion');
             $table->timestamps();
         });
     }
+    if (!Schema::hasTable('sessions')) {
     Schema::create('sessions', function (Blueprint $table) {
         $table->string('id')->primary();
         $table->foreignId('user_id')->nullable()->index();
@@ -29,6 +30,7 @@ return new class extends Migration
         $table->text('payload');
         $table->integer('last_activity')->index();
     });
+}
 }
     /**
      * Reverse the migrations.

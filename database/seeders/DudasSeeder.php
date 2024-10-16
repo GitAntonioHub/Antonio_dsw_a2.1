@@ -17,8 +17,7 @@ class DudasSeeder extends Seeder
             'modulo' => 'PHP',
             'asunto' => 'Problema con validación',
             'descripcion' => 'No sé cómo validar los datos correctamente.',
-            'created_at' => now(),
-            'updated_at' => now(),
+
         ]);
     }
 
