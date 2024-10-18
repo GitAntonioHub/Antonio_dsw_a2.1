@@ -21,6 +21,14 @@ class DudaController extends Controller{
 }
 
 
+
+    public function index()
+    {
+        $dudas = Duda::all();
+        return view('dudas.index', compact('dudas'));
+    }
+
+
     public function store(Request $request)
     {
         // Validación

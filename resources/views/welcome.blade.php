@@ -14,7 +14,7 @@
         @csrf
     
         <label for="correo">Correo electrónico:</label>
-        <input type="email" id="correo" name="correo" value="{{ old('correo') }}" required>
+        <input type="text" id="correo" name="correo" value="{{ old('correo') }}" required>
         @error('correo')
             <p>{{ $message }}</p>
         @enderror
