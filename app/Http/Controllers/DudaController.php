@@ -7,6 +7,19 @@ use Illuminate\Support\Facades\Storage;
 
 class DudaController extends Controller{
     
+    public function destroy($id)
+{
+    // Buscar la duda por su ID
+    $duda = Duda::findOrFail($id);
+
+    // Eliminar la duda
+    $duda->delete();
+
+    // Redirigir de nuevo al listado de dudas con un mensaje de éxito
+    return redirect()->route('dudas.index')->with('success', 'Duda eliminada correctamente.');
+}
+
+
     public function create(){
 
     $modulos = [

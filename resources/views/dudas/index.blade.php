@@ -1,4 +1,9 @@
+<!-- resources/views/dudas/index.blade.php -->
 <h1>Listado de Dudas</h1>
+
+@if(session('success'))
+    <div>{{ session('success') }}</div>
+@endif
 
 <table>
     <thead>
@@ -7,7 +12,7 @@
             <th>Módulo</th>
             <th>Asunto</th>
             <th>Descripción</th>
-            <th>Fecha de Creación</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -17,7 +22,16 @@
                 <td>{{ $duda->modulo }}</td>
                 <td>{{ $duda->asunto }}</td>
                 <td>{{ $duda->descripcion }}</td>
-                <td>{{ $duda->created_at }}</td>
+                <td>
+                    <!-- Formulario para eliminar la duda -->
+                    <form action="{{ route('dudas.destroy', $duda->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('¿Estás seguro de que quieres eliminar esta duda?');">
+                            Eliminar
+                        </button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </tbody>
