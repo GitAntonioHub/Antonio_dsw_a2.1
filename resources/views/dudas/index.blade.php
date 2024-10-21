@@ -18,12 +18,16 @@
     <tbody>
         @foreach ($dudas as $duda)
             <tr>
+                <td>
+                    <!-- Botón para editar la duda -->
+                    <a href="{{ route('dudas.edit', $duda->id) }}">Editar</a>
+                </td>
+                
                 <td>{{ $duda->id }}</td>
                 <td>{{ $duda->modulo }}</td>
                 <td>{{ $duda->asunto }}</td>
                 <td>{{ $duda->descripcion }}</td>
                 <td>
-                    <!-- Formulario para eliminar la duda -->
                     <form action="{{ route('dudas.destroy', $duda->id) }}" method="POST">
                         @csrf
                         @method('DELETE')

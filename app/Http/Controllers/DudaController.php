@@ -6,7 +6,39 @@ use App\Models\Duda;
 use Illuminate\Support\Facades\Storage;
 
 class DudaController extends Controller{
-    
+    public function update(Request $request, $id)
+{
+    // Validar los datos recibidos del formulario
+    $request->validate([
+        'modulo' => 'required',
+        'asunto' => 'required',
+        'descripcion' => 'required',
+    ]);
+
+    // Buscar la duda por su ID y actualizar sus datos
+    $duda = Duda::findOrFail($id);
+    $duda->update([
+        'modulo' => $request->input('modulo'),
+        'asunto' => $request->input('asunto'),
+        'descripcion' => $request->input('descripcion'),
+    ]);
+
+    // Redirigir al listado con un mensaje de éxito
+    return redirect()->route('dudas.index')->with('success', 'Duda actualizada correctamente.');
+}
+
+
+
+    public function edit($id)
+{
+    // Buscar la duda por su ID
+    $duda = Duda::findOrFail($id);
+
+    // Pasar la duda a la vista de edición
+    return view('dudas.edit', compact('duda'));
+}
+
+
     public function destroy($id)
 {
     // Buscar la duda por su ID
